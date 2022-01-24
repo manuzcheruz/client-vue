@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="nav">
-      <router-link to="/">Facts</router-link>
+      <router-link to="/">Cat Facts</router-link>
     </div>
     <router-view/>
   </div>

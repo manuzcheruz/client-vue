@@ -45,26 +45,33 @@ export default {
   },
   methods: {
     async fetchFacts() {
-      const response = await axios.get('http://localhost:3000/cat/fromSource');
-      this.facts = response.data;
+      try {
+        const url = 'http://localhost:3000/cat/fromSource';
+        const response = await axios.get(url);
+        this.facts = response.data;
+      } catch (error) {
+        alert(error.message);
+      }
     },
     async updateHandler(obj) {
-      const update = prompt('please update the fact', obj.textdescription);
-      const url = `http://localhost:3000/cat/facts/${obj.id}`;
-      console.log(url);
-      await axios.put(url,
-        { text: update });
-      // console.log(response);
-      // if (!response.statusText('OK')) {
-      //   alert('Failed to update!');
-      //   return;
-      // }
-      this.fetchFacts();
+      try {
+        const update = prompt('please update the cat fact', obj.textdescription);
+        const url = `http://localhost:3000/cat/facts/${obj.id}`;
+        await axios.put(url,
+          { text: update });
+        this.fetchFacts();
+      } catch (error) {
+        alert(error.message);
+      }
     },
     async deleteHandler(id) {
-      const url = `http://localhost:3000/cat/facts/${id}`;
-      await axios.delete(url);
-      this.fetchFacts();
+      try {
+        const url = `http://localhost:3000/cat/facts/${id}`;
+        await axios.delete(url);
+        this.fetchFacts();
+      } catch (error) {
+        alert(error.message);
+      }
     },
   },
   mounted() {
