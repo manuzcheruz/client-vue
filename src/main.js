@@ -11,6 +11,4 @@ const app = createApp(App);
 app.use(router);
 app.use(ElementPlus);
 
-// axios.defaults.baseURL = 'http://localhost:3000/cats';
-
 app.mount('#app');
