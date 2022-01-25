@@ -2,15 +2,15 @@
   <div class="facts">
     <p v-if="loading">Loading cat facts ...</p>
     <el-table v-else :data="facts" style="width: 100%">
-      <el-table-column prop="username" label="username" width="auto" data-test="username" />
+      <el-table-column prop="username" label="username" width="auto" />
       <el-table-column prop="textdescription" label="description" width="auto" />
-      <el-table-column prop="updatedat" label="last updated" />
-      <el-table-column fixed="right" label="Operations" width="120">
+      <el-table-column prop="updatedat" label="last updated" width="auto" />
+      <el-table-column fixed="right" label="Operations" width="auto">
       <template #default="scope">
-        <el-button type="text" id="update" size="small" @click="updateHandler(scope.row)"
+        <el-button id="update" size="small" @click="updateHandler(scope.row)"
           >Update</el-button
         >
-        <el-button type="text" id="delete" size="small" @click="deleteHandler(scope.row.id)">
+        <el-button id="delete" size="small" type="danger" @click="deleteHandler(scope.row.id)">
           Delete</el-button>
       </template>
     </el-table-column>
@@ -36,7 +36,7 @@ export default {
         const url = 'http://localhost:3000/cat/fromSource';
         const response = await axios.get(url);
         this.loading = false;
-        this.facts = response.data;
+        this.facts = response.data.length > 0 ? response.data : [];
       } catch (error) {
         this.loading = false;
         alert(error.message);
@@ -45,6 +45,11 @@ export default {
     async updateHandler(obj) {
       try {
         const update = prompt('please update the cat fact', obj.textdescription);
+        if (update === '') {
+          alert('update cannot be empty!');
+          return;
+        }
+        if (update === null) return;
         const url = `http://localhost:3000/cat/facts/${obj.id}`;
         await axios.put(url,
           { text: update });
