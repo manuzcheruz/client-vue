@@ -41,7 +41,7 @@ export default {
         const response = await axios.get(url);
 
         this.loading = ref(false);
-        this.facts = response.data.length > 0 ? this.prepareFacts(response.data) : [];
+        this.facts = response?.data?.length > 0 ? this.prepareFacts(response.data) : [];
       } catch (error) {
         this.errorMessage = error.message;
       }
